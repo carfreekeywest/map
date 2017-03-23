@@ -1,4 +1,3 @@
-=======
 # Car Free Key West Map
 Map for Car Free Key West
 
