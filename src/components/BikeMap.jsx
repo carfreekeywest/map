@@ -45,7 +45,6 @@ export default class BikeMap extends Component {
           { this.state.popupFeature ? (
             <Popup anchor='bottom' coordinates={this.state.popupLngLat}>
               {this.state.popupFeature.properties.NAME}
-              {this.state.popupFeature.properties.NAME}
             </Popup>
           ) : null }
         </ReactMapboxGl>
