@@ -14,4 +14,47 @@
     right: 5px;
     top: 5px;
   }
+
+  .legend-lane-types {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .lane-type {
+    margin: 10px 0;
+
+    &-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    &-description {
+      line-height: 16px;
+      margin-bottom: 5px;
+    }
+
+    &-symbol {
+      background: gray;
+      height: 20px;
+      width: 75%;
+
+      &.bike-route {
+        background: #F253B2;
+      }
+
+      &.bike-lane {
+        background: #ED067C;
+      }
+
+      &.bike-trail {
+        background: repeating-linear-gradient(to right,
+          white,
+          white 10px,
+          #E1026F 10px,
+          #E1026F 20px
+        );
+        }
+    }
+  }
 }
