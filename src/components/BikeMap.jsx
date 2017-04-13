@@ -1,30 +1,34 @@
-import React, { Component } from 'react';
-import ReactMapboxGl, { Popup, ZoomControl } from 'react-mapbox-gl';
+import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
+import { Route } from 'react-router-dom';
+import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
+import Popup from './Popup';
 
-export default class BikeMap extends Component {
+class BikeMap extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      popupFeature: null,
-      popupLngLat: null
+      map: null
     };
   }
 
   onClick(map, event) {
-    let feature = null;
-    let lnglat = null;
-
     const features = map.queryRenderedFeatures(event.point, { layers: ['poi-cfkw'] });
     if (features.length) {
-      feature = features[0];
-      lnglat = [event.lngLat.lng, event.lngLat.lat];
+      const feature = features[0];
+      this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
+    } else {
+      this.props.history.push('/');
     }
-    this.setState(prevState => {
-      return {
-        popupFeature: feature,
-        popupLngLat: lnglat
-      };
-    });
+  }
+
+  onStyleLoad(map, event) {
+    this.setState({ map: map });
   }
 
   render() {
@@ -40,15 +44,17 @@ export default class BikeMap extends Component {
             width: '100vw'
           }}
           onClick={this.onClick.bind(this)}
+          onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
-          { this.state.popupFeature ? (
-            <Popup anchor='bottom' coordinates={this.state.popupLngLat}>
-              {this.state.popupFeature.properties.NAME}
-            </Popup>
-          ) : null }
         </ReactMapboxGl>
+
+        <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
+          <Popup map={this.state.map} layer='poi-cfkw' {...props} />
+        )}/>
       </div>
     );
   }
 }
+
+export default withRouter(BikeMap);

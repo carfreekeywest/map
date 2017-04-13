@@ -30,6 +30,7 @@ config.module.loaders = [
 config.devServer = {
   contentBase: "./public",
   noInfo: true, //  --no-info option
+  historyApiFallback: true,
   hot: true,
   inline: true,
   port: 8888,

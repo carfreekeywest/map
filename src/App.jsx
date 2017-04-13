@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import BikeMap from './components/BikeMap';
-import Legend from './components/Legend';
 
-export default class App extends Component {
-  render() {
-    return (
+export default function() {
+  return (
+    <Router>
       <div className='app'>
-        <BikeMap />
-        <Legend />
+        <Route path='/' component={BikeMap} />
       </div>
-    );
-  }
+    </Router>
+  );
 }
