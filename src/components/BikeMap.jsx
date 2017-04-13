@@ -13,7 +13,8 @@ class BikeMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      map: null
+      map: null,
+      mouseOverClickable: false
     };
   }
 
@@ -27,13 +28,22 @@ class BikeMap extends Component {
     }
   }
 
+  onMouseMove(map, event) {
+    const features = map.queryRenderedFeatures(event.point, { layers: ['poi-cfkw'] });
+    if (!features.length && this.state.mouseOverClickable) {
+      this.setState({ mouseOverClickable: false });
+    } else if (features.length) {
+      this.setState({ mouseOverClickable: true });
+    }
+  }
+
   onStyleLoad(map, event) {
     this.setState({ map: map });
   }
 
   render() {
     return (
-      <div className='map-page'>
+      <div className={'map-page' + (this.state.mouseOverClickable ? ' hover' : '')}>
         <ReactMapboxGl
           style='mapbox://styles/sfcs/cj02u9vhn001r2slf71e52bna'
           accessToken='pk.eyJ1Ijoic2ZjcyIsImEiOiJjaXpmd3g2Z3cwMGk5MnhueWk4MXczbmFvIn0.emD101q5RMoUNMrQCQLYbw'
@@ -44,6 +54,7 @@ class BikeMap extends Component {
             width: '100vw'
           }}
           onClick={this.onClick.bind(this)}
+          onMouseMove={this.onMouseMove.bind(this)}
           onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
