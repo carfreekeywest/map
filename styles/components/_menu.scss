@@ -1,0 +1,28 @@
+.menu {
+  height: $header-height;
+  top: 0;
+  width: 100%;
+
+  .menu-branding {
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .menu-button {
+    background: gray;
+    cursor: pointer;
+    position: absolute;
+    height: 20px;
+    right: 20px;
+    width: 20px;
+    top: 20px;
+  }
+
+  .menu-expanded {
+    background: white;
+    position: absolute;
+    top: $header-height;
+    width: 100%;
+    z-index: 15;
+  }
+}

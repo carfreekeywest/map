@@ -60,8 +60,8 @@ class BikeMap extends Component {
           center={[-81.778836, 24.558053]}
           zoom={[13]}
           containerStyle={{
-            height: '100vh',
-            width: '100vw'
+            height: 'calc(100vh - 60px)',
+            width: '100%'
           }}
           onClick={this.onClick.bind(this)}
           onMouseMove={this.onMouseMove.bind(this)}

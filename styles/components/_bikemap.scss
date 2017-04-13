@@ -1,4 +1,7 @@
 .map-page {
+  height: calc(100vh - #{$header-height});
+  position: relative;
+
   &.hover {
     cursor: pointer;
   }
