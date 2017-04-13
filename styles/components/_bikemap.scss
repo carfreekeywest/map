@@ -2,4 +2,13 @@
   &.hover {
     cursor: pointer;
   }
+
+  .legend-button {
+    background: white;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    right: 10px;
+    top: $legend-top;
+  }
 }

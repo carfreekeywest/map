@@ -1,3 +1,4 @@
+import Legend from './Legend';
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
@@ -13,6 +14,7 @@ class BikeMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      legendShown: false,
       map: null,
       mouseOverClickable: false
     };
@@ -41,6 +43,14 @@ class BikeMap extends Component {
     this.setState({ map: map });
   }
 
+  hideLegend() {
+    this.setState({ legendShown: false });
+  }
+
+  showLegend() {
+    this.setState({ legendShown: true });
+  }
+
   render() {
     return (
       <div className={'map-page' + (this.state.mouseOverClickable ? ' hover' : '')}>
@@ -59,6 +69,12 @@ class BikeMap extends Component {
         >
           <ZoomControl />
         </ReactMapboxGl>
+
+        <a className='legend-button' onClick={this.showLegend.bind(this)}>legend</a>
+
+        { this.state.legendShown ? (
+          <Legend hide={this.hideLegend.bind(this)} />
+        ) : '' }
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
           <Popup map={this.state.map} layer='poi-cfkw' {...props} />
