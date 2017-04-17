@@ -59,6 +59,8 @@ class BikeMap extends Component {
           accessToken='pk.eyJ1Ijoic2ZjcyIsImEiOiJjaXpmd3g2Z3cwMGk5MnhueWk4MXczbmFvIn0.emD101q5RMoUNMrQCQLYbw'
           center={[-81.778836, 24.558053]}
           zoom={[13]}
+          minZoom={11}
+          maxBounds={[[-81.94, 24.49], [-81.61, 24.64]]}
           containerStyle={{
             height: 'calc(100vh - 60px)',
             width: '100%'
