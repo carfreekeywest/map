@@ -14,9 +14,11 @@ class BikeMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      center: [-81.778836, 24.558053],
       legendShown: false,
       map: null,
-      mouseOverClickable: false
+      mouseOverClickable: false,
+      zoom: [13]
     };
   }
 
@@ -43,6 +45,13 @@ class BikeMap extends Component {
     this.setState({ map: map });
   }
 
+  centerOnFeature(feature) {
+    this.setState({
+      center: feature.geometry.coordinates,
+      zoom: [15]
+    });
+  }
+
   hideLegend() {
     this.setState({ legendShown: false });
   }
@@ -57,8 +66,8 @@ class BikeMap extends Component {
         <ReactMapboxGl
           style='mapbox://styles/sfcs/cj02u9vhn001r2slf71e52bna'
           accessToken='pk.eyJ1Ijoic2ZjcyIsImEiOiJjaXpmd3g2Z3cwMGk5MnhueWk4MXczbmFvIn0.emD101q5RMoUNMrQCQLYbw'
-          center={[-81.778836, 24.558053]}
-          zoom={[13]}
+          center={this.state.center}
+          zoom={this.state.zoom}
           minZoom={11}
           maxBounds={[[-81.94, 24.49], [-81.61, 24.64]]}
           containerStyle={{
@@ -79,7 +88,7 @@ class BikeMap extends Component {
         ) : '' }
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
-          <Popup map={this.state.map} layer='poi-cfkw' {...props} />
+          <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} {...props} />
         )}/>
       </div>
     );

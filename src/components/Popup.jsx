@@ -15,6 +15,7 @@ function Popup({ feature }) {
 
 export default class PopupContainer extends Component {
   static propTypes = {
+    centerOnFeature: PropTypes.func.isRequired,
     layer: PropTypes.string.isRequired,
     map: PropTypes.object,
     match: PropTypes.object.isRequired
@@ -35,24 +36,22 @@ export default class PopupContainer extends Component {
     this.findFeatureIfNeeded(nextProps);
   }
 
+  setFetaure(layer, name, id) {
+    const feature = this.findFeature(layer, name, id);
+    this.setState(() => {
+      return { feature };
+    });
+    this.props.centerOnFeature(feature);
+  }
+
   findFeatureIfNeeded(props) {
     const name = props.match.params.name;
     const id = parseInt(props.match.params.id, 10);
-    if (props.map) {
+    if (props.map && !this.state.feature) {
       if (!props.map.loaded()) {
-        props.map.on('load', () => {
-          this.setState(() => {
-            return {
-              feature: this.findFeature(props.layer, name, id)
-            };
-          });
-        });
+        props.map.on('load', () => this.setFetaure(props.layer, name, id));
       } else {
-        this.setState(() => {
-          return {
-            feature: this.findFeature(props.layer, name, id)
-          };
-        });
+        this.setFetaure(props.layer, name, id);
       }
     }
   }
