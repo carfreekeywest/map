@@ -2,8 +2,15 @@ import Legend from './Legend';
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
 import Popup from './Popup';
+
+const routeLayerLabels = {
+  'bike-lanes': 'Bike Lane',
+  'bike-routes': 'Bike Route',
+  'bike-trails-background': 'Bike Trail',
+  'bike-trails-dashes': 'Bike Trail'
+};
 
 class BikeMap extends Component {
   static propTypes = {
@@ -18,17 +25,38 @@ class BikeMap extends Component {
       legendShown: false,
       map: null,
       mouseOverClickable: false,
+      routePopup: null,
+      routePopupCoordinates: null,
       zoom: [13]
     };
   }
 
   onClick(map, event) {
-    const features = map.queryRenderedFeatures(event.point, { layers: ['poi-cfkw'] });
-    if (features.length) {
-      const feature = features[0];
-      this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
-    } else {
+    const features = map.queryRenderedFeatures(event.point, {
+      layers: ['poi-cfkw'].concat(Object.keys(routeLayerLabels))
+    });
+    if (!features.length) {
       this.props.history.push('/');
+      this.setState({
+        routePopup: null,
+        routePopupCoordinates: null
+      });
+      return;
+    }
+
+    const feature = features[0];
+
+    if (feature.layer.id === 'poi-cfkw') {
+      this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
+      this.setState({
+        routePopup: null,
+        routePopupCoordinates: null
+      });
+    } else if (routeLayerLabels[feature.layer.id]) {
+      this.setState({
+        routePopupCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        routePopup: routeLayerLabels[feature.layer.id]
+      });
     }
   }
 
@@ -79,6 +107,12 @@ class BikeMap extends Component {
           onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
+
+          { this.state.routePopup ? (
+            <MapboxPopup anchor={'bottom'} coordinates={this.state.routePopupCoordinates}>
+              {this.state.routePopup}
+            </MapboxPopup>
+          ) : '' }
         </ReactMapboxGl>
 
         <a className='legend-button' onClick={this.showLegend.bind(this)}>legend</a>
