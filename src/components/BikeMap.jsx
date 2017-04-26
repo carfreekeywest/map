@@ -47,11 +47,11 @@ class BikeMap extends Component {
     const feature = features[0];
 
     if (feature.layer.id === 'poi-cfkw') {
-      this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
       this.setState({
         routePopup: null,
         routePopupCoordinates: null
       });
+      this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
     } else if (routeLayerLabels[feature.layer.id]) {
       this.setState({
         routePopupCoordinates: [event.lngLat.lng, event.lngLat.lat],

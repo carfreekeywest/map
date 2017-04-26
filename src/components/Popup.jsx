@@ -36,7 +36,7 @@ export default class PopupContainer extends Component {
     this.findFeatureIfNeeded(nextProps);
   }
 
-  setFetaure(layer, name, id) {
+  setFeature(layer, name, id) {
     const feature = this.findFeature(layer, name, id);
     this.setState(() => {
       return { feature };
@@ -47,11 +47,11 @@ export default class PopupContainer extends Component {
   findFeatureIfNeeded(props) {
     const name = props.match.params.name;
     const id = parseInt(props.match.params.id, 10);
-    if (props.map && !this.state.feature) {
+    if (props.map && (!this.state.feature || name !== this.props.match.params.name)) {
       if (!props.map.loaded()) {
-        props.map.on('load', () => this.setFetaure(props.layer, name, id));
+        props.map.on('load', () => this.setFeature(props.layer, name, id));
       } else {
-        this.setFetaure(props.layer, name, id);
+        this.setFeature(props.layer, name, id);
       }
     }
   }
