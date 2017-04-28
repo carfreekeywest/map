@@ -1,12 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 
-function Popup({ feature }) {
+function Popup({ close, feature }) {
   return (
     <div className='popup'>
       {!feature ? 'Not found' : (
         <div>
-          {feature.properties.NAME},
-          {feature.properties.ADDRESS}
+          <h2>
+            {feature.properties.NAME}
+            <a className='popup-close' onClick={close}>x</a>
+          </h2>
+          <div className='popup-inner'>
+            <div className='popup-address'>{feature.properties.ADDRESS}</div>
+          </div>
         </div>
       )}
     </div>
@@ -16,6 +21,7 @@ function Popup({ feature }) {
 export default class PopupContainer extends Component {
   static propTypes = {
     centerOnFeature: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
     layer: PropTypes.string.isRequired,
     map: PropTypes.object,
     match: PropTypes.object.isRequired
@@ -65,6 +71,6 @@ export default class PopupContainer extends Component {
   }
 
   render() {
-    return <Popup feature={this.state.feature} />;
+    return <Popup close={this.props.close} feature={this.state.feature} />;
   }
 }

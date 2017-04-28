@@ -70,11 +70,7 @@ class BikeMap extends Component {
       layers: ['poi-cfkw'].concat(Object.keys(routeLayerLabels))
     });
     if (!features.length) {
-      this.props.history.push('/');
-      this.setState({
-        routePopup: null,
-        routePopupCoordinates: null
-      });
+      this.deselectFeature();
       return;
     }
 
@@ -105,6 +101,14 @@ class BikeMap extends Component {
 
   onStyleLoad(map, event) {
     this.setState({ map: map });
+  }
+
+  deselectFeature() {
+    this.props.history.push('/');
+    this.setState({
+      routePopup: null,
+      routePopupCoordinates: null
+    });
   }
 
   centerOnFeature(feature) {
@@ -182,7 +186,7 @@ class BikeMap extends Component {
         }}>1 mile = 8 min bike / 20 min walk</a>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
-          <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} {...props} />
+          <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} close={this.deselectFeature.bind(this)} {...props} />
         )}/>
       </div>
     );

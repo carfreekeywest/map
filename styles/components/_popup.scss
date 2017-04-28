@@ -2,7 +2,26 @@
   background-color: white;
   bottom: 0;
   left: 0;
-  padding: 25px;
   position: absolute;
   width: 100%;
+
+  h2 {
+    background: gray;
+    color: white;
+    font-size: 24px;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .popup-close {
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+
+  .popup-inner {
+    padding: 25px;
+  }
 }
