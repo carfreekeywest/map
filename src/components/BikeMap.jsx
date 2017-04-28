@@ -2,7 +2,11 @@ import Legend from './Legend';
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import ReactMapboxGl, { Feature, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Feature, GeoJSONLayer, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
+import turfBboxPolygon from '@turf/bbox-polygon';
+import turfCircle from '@turf/circle';
+import turfInside from '@turf/inside';
+import { point as turfPoint } from '@turf/helpers';
 import Popup from './Popup';
 
 const routeLayerLabels = {
@@ -11,6 +15,9 @@ const routeLayerLabels = {
   'bike-trails-background': 'Bike Trail',
   'bike-trails-dashes': 'Bike Trail'
 };
+
+const bounds = [24.49, -81.94, 24.64, -81.61];
+const boundsBbox = turfBboxPolygon(bounds);
 
 class BikeMap extends Component {
   static propTypes = {
@@ -23,6 +30,8 @@ class BikeMap extends Component {
     this.state = {
       center: [-81.778836, 24.558053],
       currentPosition: null,
+      currentPositionRadius: null,
+      currentPositionRadiusEnabled: false,
       legendShown: false,
       map: null,
       mouseOverClickable: false,
@@ -34,8 +43,20 @@ class BikeMap extends Component {
 
   componentWillMount() {
     this.watchPositionId = navigator.geolocation.watchPosition(position => {
+      let coords = [position.coords.longitude, position.coords.latitude];
+      let point = turfPoint(coords);
+      let buffer = turfCircle(point, 1, 64, 'miles');
+
+      // If point outside of keywest, fall back to default
+      if (!turfInside(point, boundsBbox)) {
+        coords = [-81.802118, 24.554755];
+        point = turfPoint(coords);
+        buffer = turfCircle(point, 1, 64, 'miles');
+      }
+
       this.setState({
-        currentPosition: [position.coords.longitude, position.coords.latitude]
+        currentPosition: coords,
+        currentPositionRadius: buffer
       });
     });
   }
@@ -110,7 +131,7 @@ class BikeMap extends Component {
           center={this.state.center}
           zoom={this.state.zoom}
           minZoom={11}
-          maxBounds={[[-81.94, 24.49], [-81.61, 24.64]]}
+          maxBounds={[[bounds[1], bounds[1]], [bounds[3], bounds[2]]]}
           containerStyle={{
             height: 'calc(100vh - 60px)',
             width: '100%'
@@ -120,6 +141,15 @@ class BikeMap extends Component {
           onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
+
+          { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadius) ? (
+            <GeoJSONLayer
+              data={this.state.currentPositionRadius}
+              circleLayout={{ visibility: 'none' }}
+              fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#4065BF' }}
+              lineLayout={{ visibility: 'none' }}
+            />
+          ) : '' }
 
           { this.state.currentPosition ? (
             <Layer
@@ -142,6 +172,14 @@ class BikeMap extends Component {
         { this.state.legendShown ? (
           <Legend hide={this.hideLegend.bind(this)} />
         ) : '' }
+
+        <a className='scale-button' onClick={() => {
+          this.setState(prevState => {
+            return {
+              currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
+            };
+          });
+        }}>1 mile = 8 min bike / 20 min walk</a>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
           <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} {...props} />

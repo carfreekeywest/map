@@ -14,4 +14,11 @@
     right: 10px;
     top: $legend-top;
   }
+
+  .scale-button {
+    bottom: 10px;
+    cursor: pointer;
+    left: 10px;
+    position: absolute;
+  }
 }
