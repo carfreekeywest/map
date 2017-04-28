@@ -2,7 +2,7 @@ import Legend from './Legend';
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import ReactMapboxGl, { Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Feature, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
 import Popup from './Popup';
 
 const routeLayerLabels = {
@@ -22,6 +22,7 @@ class BikeMap extends Component {
     super(props);
     this.state = {
       center: [-81.778836, 24.558053],
+      currentPosition: null,
       legendShown: false,
       map: null,
       mouseOverClickable: false,
@@ -29,6 +30,18 @@ class BikeMap extends Component {
       routePopupCoordinates: null,
       zoom: [13]
     };
+  }
+
+  componentWillMount() {
+    this.watchPositionId = navigator.geolocation.watchPosition(position => {
+      this.setState({
+        currentPosition: [position.coords.longitude, position.coords.latitude]
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchPositionId);
   }
 
   onClick(map, event) {
@@ -107,6 +120,15 @@ class BikeMap extends Component {
           onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
+
+          { this.state.currentPosition ? (
+            <Layer
+              id='current-location'
+              type='circle'
+              paint={{ 'circle-radius': 5, 'circle-color': '#4065BF', 'circle-opacity': 0.8 }}>
+              <Feature coordinates={this.state.currentPosition} />
+            </Layer>
+          ) : '' }
 
           { this.state.routePopup ? (
             <MapboxPopup anchor={'bottom'} coordinates={this.state.routePopupCoordinates}>
