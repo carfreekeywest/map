@@ -7,7 +7,10 @@ import turfBboxPolygon from '@turf/bbox-polygon';
 import turfCircle from '@turf/circle';
 import turfInside from '@turf/inside';
 import { point as turfPoint } from '@turf/helpers';
+import BusMarker from './BusMarker';
+import BusMenu from './BusMenu';
 import Popup from './Popup';
+import { getBuses } from '../services/bus';
 
 const routeLayerLabels = {
   'bike-lanes': 'Bike Lane',
@@ -28,6 +31,8 @@ class BikeMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      buses: [],
+      busMenuOpen: false,
       center: [-81.778836, 24.558053],
       currentPosition: null,
       currentPositionRadius: null,
@@ -37,11 +42,16 @@ class BikeMap extends Component {
       mouseOverClickable: false,
       routePopup: null,
       routePopupCoordinates: null,
+      selectedBuses: [],
       zoom: [13]
     };
   }
 
   componentWillMount() {
+    if (!this.state.buses.length) {
+      this.getBusRoutes();
+    }
+
     this.watchPositionId = navigator.geolocation.watchPosition(position => {
       let coords = [position.coords.longitude, position.coords.latitude];
       let point = turfPoint(coords);
@@ -103,6 +113,12 @@ class BikeMap extends Component {
     this.setState({ map: map });
   }
 
+  getBusRoutes() {
+    getBuses(buses => {
+      this.setState({ buses });
+    });
+  }
+
   deselectFeature() {
     this.props.history.push('/');
     this.setState({
@@ -124,6 +140,14 @@ class BikeMap extends Component {
 
   showLegend() {
     this.setState({ legendShown: true });
+  }
+
+  hideBusMenu() {
+    this.setState({ busMenuOpen: false });
+  }
+
+  showBusMenu() {
+    this.setState({ busMenuOpen: true });
   }
 
   render() {
@@ -169,6 +193,14 @@ class BikeMap extends Component {
               {this.state.routePopup}
             </MapboxPopup>
           ) : '' }
+
+          { this.state.selectedBuses.map(selectedBusName => {
+            const selectedBus = this.state.buses.filter(b => b.name === selectedBusName)[0];
+            if (!selectedBus) return '';
+            return (
+              <BusMarker key={selectedBus.shortName} {...selectedBus} />
+            );
+          })}
         </ReactMapboxGl>
 
         <a className='legend-button' onClick={this.showLegend.bind(this)}>legend</a>
@@ -177,13 +209,38 @@ class BikeMap extends Component {
           <Legend hide={this.hideLegend.bind(this)} />
         ) : '' }
 
-        <a className='scale-button' onClick={() => {
-          this.setState(prevState => {
-            return {
-              currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
-            };
-          });
-        }}>1 mile = 8 min bike / 20 min walk</a>
+        { this.state.busMenuOpen ? (
+          <BusMenu
+            hide={this.hideBusMenu.bind(this)}
+            buses={this.state.buses}
+            selectedBuses={this.state.selectedBuses}
+            toggleBus={(bus) => {
+              const busIndex = this.state.selectedBuses.indexOf(bus);
+              const newSelectedBuses = this.state.selectedBuses.slice();
+              if (busIndex >= 0) {
+                newSelectedBuses.splice(busIndex, 1);
+              } else {
+                newSelectedBuses.push(bus);
+              }
+              this.setState({ selectedBuses: newSelectedBuses });
+            }}
+          />
+        ) : '' }
+
+        <div className='bottom-buttons'>
+          <a className='scale-button' onClick={() => {
+            this.setState(prevState => {
+              return {
+                currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
+              };
+            });
+          }}>1 mile = 8 min bike / 20 min walk</a>
+
+          <a className='bus-button' onClick={() => {
+            if (this.state.busMenuOpen) this.hideBusMenu();
+            else this.showBusMenu();
+          }}>buses</a>
+        </div>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
           <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} close={this.deselectFeature.bind(this)} {...props} />
