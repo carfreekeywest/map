@@ -5,11 +5,10 @@
 
 $max-width: 1600px !default;
 
-$font-stack-main: 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$font-stack-main: 'Signika', sans-serif !default;
 
 $color-base: #000 !default;
 
-$header-height: 60px;
 $legend-right: 10px;
 $legend-top: 75px;
 
@@ -21,3 +20,6 @@ $depth-5: 5 !default;
 $depth-10: 10 !default;
 $depth-100: 100 !default;
 $depth-max: 99999999 !default;
+
+$blue: #4793D0;
+$pink: #ED247C;
