@@ -1,18 +1,39 @@
+$legend-border-radius: 5px;
+
 .legend {
-  background: white;
-  border-radius: 5px;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $legend-border-radius;
   position: absolute;
   right: $legend-right;
   top: $legend-top;
-  width: 200px;
+  width: 300px;
   max-width: 90%;
+  z-index: 15;
 
   .legend-close {
+    color: white;
     cursor: pointer;
+    font-size: 24px;
+    line-height: 24px;
+    margin-right: 5px;
+    margin-top: 5px;
     position: absolute;
     right: 5px;
     top: 5px;
+  }
+
+  .legend-header {
+    background: $pink;
+    border-top-left-radius: $legend-border-radius;
+    border-top-right-radius: $legend-border-radius;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .legend-body {
+    padding: 10px;
   }
 
   .legend-lane-types {
@@ -36,15 +57,15 @@
 
     &-symbol {
       background: gray;
-      height: 20px;
-      width: 75%;
+      height: 8px;
+      width: 25%;
 
       &.bike-route {
         background: #F253B2;
       }
 
       &.bike-lane {
-        background: #ED067C;
+        background: $pink;
       }
 
       &.bike-trail {
@@ -54,7 +75,16 @@
           #E1026F 10px,
           #E1026F 20px
         );
-        }
+      }
+
+      &.duval-loop {
+        background: $duval-loop-color;
+      }
+
+      &.bus-route {
+        background: $bus-route-color;
+        height: 4px;
+      }
     }
   }
 }
