@@ -229,10 +229,10 @@ class BikeMap extends Component {
               id='current-location'
               type='circle'
               paint={{
-                'circle-radius': 5,
+                'circle-radius': 6,
                 'circle-color': '#0F7BBC',
-                'circle-opacity': 0.8,
-                'circle-stroke-width': 1,
+                'circle-opacity': 1,
+                'circle-stroke-width': 2,
                 'circle-stroke-color': 'white'
               }}>
               <Feature coordinates={this.state.currentPosition} />
