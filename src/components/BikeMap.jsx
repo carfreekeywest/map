@@ -257,7 +257,9 @@ class BikeMap extends Component {
             <a className='bus-button' onClick={() => {
               if (this.state.busMenuOpen) this.hideBusMenu();
               else this.showBusMenu();
-            }}>buses</a>
+            }}>
+              <img src='/assets/bus-icon.png' />
+            </a>
           </div>
         </footer>
 

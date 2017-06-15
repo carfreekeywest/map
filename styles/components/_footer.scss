@@ -16,11 +16,14 @@ footer {
     display: inline-block;
     height: $footer-height * 0.8;
     margin-top: $footer-height * 0.1;
-    margin-left: 15px;
+    margin-left: 25px;
   }
 
   .bus-button {
     cursor: pointer;
-    margin-left: 10px;
+    display: inline-block;
+    height: $footer-height * 0.8;
+    margin-top: $footer-height * 0.1;
+    margin-left: 25px;
   }
 }
