@@ -218,8 +218,8 @@ class BikeMap extends Component {
               data={this.state.currentPositionRadiusLineMidpoint}
               symbolLayout={{
                 'icon-image': '1mile-bike-walk',
-                'icon-offset': [0, -10],
-                'icon-size': 0.9
+                'icon-offset': [0, -40],
+                'icon-size': 0.3
               }}
             />
           ) : '' }
