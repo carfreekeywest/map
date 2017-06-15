@@ -212,14 +212,6 @@ class BikeMap extends Component {
               <BusMarker key={selectedBus.shortName} {...selectedBus} />
             );
           })}
-
-          {
-            /*
-          { this.state.busRoutesEnabled ? (
-              // TODO show bus route layers
-          ) : '' }
-            */
-          }
         </ReactMapboxGl>
 
         <a className='legend-button' onClick={this.showLegend.bind(this)}>legend</a>
@@ -250,20 +242,22 @@ class BikeMap extends Component {
           />
         ) : '' }
 
-        <div className='bottom-buttons'>
-          <a className='scale-button' onClick={() => {
-            this.setState(prevState => {
-              return {
-                currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
-              };
-            });
-          }}>1 mile = 8 min bike / 20 min walk</a>
+        <footer>
+          <div className='bottom-buttons'>
+            <a className='scale-button' onClick={() => {
+              this.setState(prevState => {
+                return {
+                  currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
+                };
+              });
+            }}>1 mile = 8 min bike / 20 min walk</a>
 
-          <a className='bus-button' onClick={() => {
-            if (this.state.busMenuOpen) this.hideBusMenu();
-            else this.showBusMenu();
-          }}>buses</a>
-        </div>
+            <a className='bus-button' onClick={() => {
+              if (this.state.busMenuOpen) this.hideBusMenu();
+              else this.showBusMenu();
+            }}>buses</a>
+          </div>
+        </footer>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
           <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} close={this.deselectFeature.bind(this)} {...props} />
