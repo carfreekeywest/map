@@ -1,27 +1,27 @@
 .popup {
-  background-color: white;
+  background-color: $pink;
   bottom: 0;
+  color: white;
+  height: $footer-height;
+  max-height: $footer-height;
   left: 0;
+  overflow: hidden;
   position: absolute;
+  text-align: center;
   width: 100%;
 
   h2 {
-    background: gray;
     color: white;
-    font-size: 24px;
+    font-size: 16px;
     margin-bottom: 0;
-    text-align: center;
+    margin-top: 10px;
   }
 
   .popup-close {
-    cursor: pointer;
-    float: right;
-    font-size: 18px;
-    margin-right: 5px;
-    margin-top: 5px;
+    @include overlay-close();
   }
 
   .popup-inner {
-    padding: 25px;
+    padding: 5px;
   }
 }

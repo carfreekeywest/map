@@ -5,12 +5,11 @@ function Popup({ close, feature }) {
     <div className='popup'>
       {!feature ? 'Not found' : (
         <div>
+          <a className='popup-close' onClick={close}>✕</a>
           <h2>
             {feature.properties.NAME}
-            <a className='popup-close' onClick={close}>x</a>
           </h2>
           <div className='popup-inner'>
-            <div className='popup-address'>{feature.properties.ADDRESS}</div>
           </div>
         </div>
       )}
