@@ -4,7 +4,7 @@ $legend-border-radius: 5px;
   @include overlay();
   right: $legend-right;
   top: $legend-top;
-  width: 300px;
+  width: 350px;
   max-width: 90%;
 
   .legend-close {
@@ -26,7 +26,7 @@ $legend-border-radius: 5px;
   }
 
   .lane-type {
-    margin: 10px 0;
+    margin: 20px 0;
 
     &-name {
       font-weight: bold;
