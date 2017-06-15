@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function({ hide }) {
+export default function({ hide, busRoutesEnabled, toggleBusRoutes }) {
   return (
     <div className='legend'>
       <div className='legend-header'>
@@ -39,6 +39,15 @@ export default function({ hide }) {
               <div>Earliest routes begin at 5:30am and run as late as midnight. <a href='http://kwtransit.com'>Visit kwtransit.com</a> for details</div>
             </div>
             <div className='lane-type-symbol bus-route'></div>
+            <div className='bus-route-toggle'>
+              <label>
+                <input type='checkbox'
+                  onChange={() => toggleBusRoutes()}
+                  checked={busRoutesEnabled}
+                />
+                Hide bus routes
+              </label>
+            </div>
           </li>
         </ul>
       </div>

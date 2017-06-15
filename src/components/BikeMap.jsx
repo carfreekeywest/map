@@ -11,6 +11,7 @@ import BusMarker from './BusMarker';
 import BusMenu from './BusMenu';
 import Popup from './Popup';
 import { getBuses } from '../services/bus';
+import { busRouteLayerNames } from '../config';
 
 const routeLayerLabels = {
   'bike-lanes': 'Bike Lane',
@@ -33,6 +34,7 @@ class BikeMap extends Component {
     this.state = {
       buses: [],
       busMenuOpen: false,
+      busRoutesEnabled: true,
       center: [-81.778836, 24.558053],
       currentPosition: null,
       currentPositionRadius: null,
@@ -110,7 +112,7 @@ class BikeMap extends Component {
   }
 
   onStyleLoad(map, event) {
-    this.setState({ map: map });
+    this.setState({ map });
   }
 
   getBusRoutes() {
@@ -132,6 +134,15 @@ class BikeMap extends Component {
       center: feature.geometry.coordinates,
       zoom: [15]
     });
+  }
+
+  toggleBusRoutes(value) {
+    const busRoutesEnabled = (value === undefined) ? !this.state.busRoutesEnabled : value;
+    const visibility = busRoutesEnabled ? 'visible' : 'none';
+    busRouteLayerNames.forEach(layer => {
+      this.state.map.setLayoutProperty(layer, 'visibility', visibility);
+    });
+    this.setState({ busRoutesEnabled });
   }
 
   hideLegend() {
@@ -201,12 +212,24 @@ class BikeMap extends Component {
               <BusMarker key={selectedBus.shortName} {...selectedBus} />
             );
           })}
+
+          {
+            /*
+          { this.state.busRoutesEnabled ? (
+              // TODO show bus route layers
+          ) : '' }
+            */
+          }
         </ReactMapboxGl>
 
         <a className='legend-button' onClick={this.showLegend.bind(this)}>legend</a>
 
         { this.state.legendShown ? (
-          <Legend hide={this.hideLegend.bind(this)} />
+          <Legend
+            hide={this.hideLegend.bind(this)}
+            busRoutesEnabled={this.state.busRoutesEnabled}
+            toggleBusRoutes={this.toggleBusRoutes.bind(this)}
+          />
         ) : '' }
 
         { this.state.busMenuOpen ? (

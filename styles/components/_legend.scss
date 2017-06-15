@@ -87,4 +87,13 @@ $legend-border-radius: 5px;
       }
     }
   }
+
+  .bus-route-toggle {
+    color: $gray;
+    margin-top: 3px;
+
+    input {
+      margin-right: 5px;
+    }
+  }
 }
