@@ -29,3 +29,12 @@ $gray: #B7B7B7;
 $pink: #ED247C;
 $bus-route-color: #41A4F7;
 $duval-loop-color: #3D86C3;
+
+$breakpoint-medium: 1024px !default;
+$breakpoint-small: 767px !default;
+
+$breakpoints: (
+  'medium': (max-width: $breakpoint-medium),
+  'small': (max-width: $breakpoint-small),
+  'retina': (max-width: $breakpoint-small)
+);

@@ -1,4 +1,4 @@
-$menu-zindex: 15;
+$menu-zindex: 25;
 
 .menu {
   background: white;
@@ -9,6 +9,11 @@ $menu-zindex: 15;
   transition: left 1s;
   width: 33%;
   z-index: $menu-zindex;
+
+  @include respond-to('small') {
+    left: -75%;
+    width: 75%;
+  }
 
   &.is-open {
     left: 0;
