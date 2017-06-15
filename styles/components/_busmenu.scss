@@ -3,6 +3,7 @@
   left: 20px;
   bottom: $footer-height + 20px;
   width: 400px;
+  max-width: 80%;
 
   .bus-menu-header {
     @include overlay-header();
@@ -24,6 +25,14 @@
   .bus-menu-right {
     float: left;
     width: 50%;
+  }
+
+  @include respond-to('small') {
+    .bus-menu-left,
+    .bus-menu-right {
+      float: none;
+      width: 100%;
+    }
   }
 
   .bus-menu-item {
