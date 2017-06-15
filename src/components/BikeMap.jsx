@@ -208,7 +208,7 @@ class BikeMap extends Component {
               before='current-location'
               circleLayout={{ visibility: 'none' }}
               data={this.state.currentPositionRadiusLine}
-              fillPaint={{ 'fill-color': '#FFFFFF' }}
+              linePaint={{ 'line-color': '#FFFFFF', 'line-width': 5 }}
             />
           ) : '' }
 
