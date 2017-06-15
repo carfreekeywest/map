@@ -185,7 +185,7 @@ class BikeMap extends Component {
             <GeoJSONLayer
               data={this.state.currentPositionRadius}
               circleLayout={{ visibility: 'none' }}
-              fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#4065BF' }}
+              fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#3FAADC' }}
               lineLayout={{ visibility: 'none' }}
             />
           ) : '' }
@@ -194,7 +194,13 @@ class BikeMap extends Component {
             <Layer
               id='current-location'
               type='circle'
-              paint={{ 'circle-radius': 5, 'circle-color': '#4065BF', 'circle-opacity': 0.8 }}>
+              paint={{
+                'circle-radius': 5,
+                'circle-color': '#0F7BBC',
+                'circle-opacity': 0.8,
+                'circle-stroke-width': 1,
+                'circle-stroke-color': 'white'
+              }}>
               <Feature coordinates={this.state.currentPosition} />
             </Layer>
           ) : '' }
