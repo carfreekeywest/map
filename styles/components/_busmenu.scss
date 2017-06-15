@@ -1,9 +1,44 @@
 .bus-menu {
-  background-color: white;
-  padding: 10px;
-  position: absolute;
-  left: 10px;
-  bottom: 40px;
+  @include overlay();
+  left: 20px;
+  bottom: $footer-height + 20px;
+  width: 400px;
+
+  .bus-menu-header {
+    @include overlay-header();
+  }
+
+  .bus-menu-body {
+    padding: 10px;
+  }
+
+  .bus-menu-close {
+    @include overlay-close;
+  }
+
+  .bus-menu-left {
+    float: left;
+    width: 50%;
+  }
+
+  .bus-menu-right {
+    float: left;
+    width: 50%;
+  }
+
+  .bus-menu-item {
+    margin: 10px 0;
+  }
+
+  .bus-menu-label {
+    background: $gray;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    padding: 3px;
+    text-align: center;
+    width: 150px;
+  }
 
   input {
     margin-right: 5px;

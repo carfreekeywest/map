@@ -1,35 +1,18 @@
 $legend-border-radius: 5px;
 
 .legend {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: $legend-border-radius;
-  position: absolute;
+  @include overlay();
   right: $legend-right;
   top: $legend-top;
   width: 300px;
   max-width: 90%;
-  z-index: 15;
 
   .legend-close {
-    color: white;
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 24px;
-    margin-right: 5px;
-    margin-top: 5px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+    @include overlay-close;
   }
 
   .legend-header {
-    background: $pink;
-    border-top-left-radius: $legend-border-radius;
-    border-top-right-radius: $legend-border-radius;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    text-align: center;
+    @include overlay-header();
   }
 
   .legend-body {

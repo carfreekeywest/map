@@ -1,0 +1,30 @@
+$overlay-border-radius: 5px;
+
+@mixin overlay() {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $overlay-border-radius;
+  position: absolute;
+  z-index: 15;
+}
+
+@mixin overlay-header() {
+  background: $pink;
+  border-top-left-radius: $overlay-border-radius;
+  border-top-right-radius: $overlay-border-radius;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+@mixin overlay-close {
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 24px;
+  margin-right: 5px;
+  margin-top: 5px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
