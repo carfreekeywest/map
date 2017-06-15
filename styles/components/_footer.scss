@@ -1,0 +1,26 @@
+footer {
+  background: $dark-blue;
+  color: white;
+  height: $footer-height;
+
+  .bottom-buttons {
+    height: 100%;
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  .scale-button {
+    cursor: pointer;
+    display: inline-block;
+    height: $footer-height * 0.8;
+    margin-top: $footer-height * 0.1;
+    margin-left: 15px;
+  }
+
+  .bus-button {
+    cursor: pointer;
+    margin-left: 10px;
+  }
+}

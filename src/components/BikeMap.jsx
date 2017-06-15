@@ -250,7 +250,9 @@ class BikeMap extends Component {
                   currentPositionRadiusEnabled: !prevState.currentPositionRadiusEnabled
                 };
               });
-            }}>1 mile = 8 min bike / 20 min walk</a>
+            }}>
+              <img src='/assets/scale-icon.png' />
+            </a>
 
             <a className='bus-button' onClick={() => {
               if (this.state.busMenuOpen) this.hideBusMenu();
