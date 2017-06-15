@@ -257,14 +257,14 @@ class BikeMap extends Component {
                 };
               });
             }}>
-              <img src='/assets/scale-icon.png' />
+              <img src={`/assets/scale-icon${this.state.currentPositionRadiusEnabled ? '-enabled' : ''}.png`} />
             </a>
 
             <a className='bus-button' onClick={() => {
               if (this.state.busMenuOpen) this.hideBusMenu();
               else this.showBusMenu();
             }}>
-              <img src='/assets/bus-icon.png' />
+              <img src={`/assets/bus-icon${this.state.busMenuOpen ? '-enabled' : ''}.png`} />
             </a>
           </div>
         </footer>
