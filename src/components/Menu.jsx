@@ -33,24 +33,22 @@ export default class Menu extends Component {
           <div className='menu-button-bar'></div>
         </div>
 
-        { this.state.open &&
-          <div className='menu'>
-            <div className='menu-close' onClick={this.toggle.bind(this)}>✕</div>
-            <div className='menu-header'>
-              <img className='menu-tagline' src='/assets/tagline.png' />
-            </div>
-            <div className='menu-links'>
-              <ul>
-                <li><a href='https://www.carfreekeywest.com/about-us'>about</a></li>
-                <li><a href='https://www.carfreekeywest.com/safety'>safety</a></li>
-                <li><a href='https://www.carfreekeywest.com/contact-us'>contact</a></li>
-              </ul>
-            </div>
-            <div className='menu-footer'>
-              <img className='menu-icons' src='/assets/large-icons.png' />
-            </div>
+        <div className={'menu' + (this.state.open ? ' is-open' : '')}>
+          <div className='menu-close' onClick={this.toggle.bind(this)}>✕</div>
+          <div className='menu-header'>
+            <img className='menu-tagline' src='/assets/tagline.png' />
           </div>
-        }
+          <div className='menu-links'>
+            <ul>
+              <li><a href='https://www.carfreekeywest.com/about-us'>about</a></li>
+              <li><a href='https://www.carfreekeywest.com/safety'>safety</a></li>
+              <li><a href='https://www.carfreekeywest.com/contact-us'>contact</a></li>
+            </ul>
+          </div>
+          <div className='menu-footer'>
+            <img className='menu-icons' src='/assets/large-icons.png' />
+          </div>
+        </div>
       </div>
     );
   }

@@ -3,10 +3,16 @@ $menu-zindex: 15;
 .menu {
   background: white;
   height: 100%;
+  left: -33%;
   position: absolute;
   top: 0;
+  transition: left 1s;
   width: 33%;
   z-index: $menu-zindex;
+
+  &.is-open {
+    left: 0;
+  }
 
   .menu-close {
     color: $pink;
