@@ -1,0 +1,28 @@
+@mixin bus-popup($line) {
+  $color: map-get($bus-colors, $line);
+
+  .mapboxgl-popup-content {
+    background: $color;
+  }
+
+  .mapboxgl-popup-tip {
+    border-top-color: $color;
+  }
+}
+
+.mapboxgl-popup {
+  img {
+    margin: 3px;
+  }
+
+  .mapboxgl-popup-content {
+    height: 23px;
+    padding: 0;
+  }
+
+  @each $line, $color in $bus-colors {
+    &.#{$line} {
+      @include bus-popup($line);
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Feature, Layer } from 'react-mapbox-gl';
+import slug from 'slug';
+import { Popup as MapboxPopup } from 'react-mapbox-gl';
 import { getBusLocation } from '../services/bus';
 
 export default class BusMarker extends Component {
@@ -43,17 +44,16 @@ export default class BusMarker extends Component {
   }
 
   render() {
+    if (!this.state.currentPosition.length) return null;
     return (
-      <Layer
-        id={this.props.name}
-        type='circle'
-        paint={{
-          'circle-radius': 10,
-          'circle-color': this.props.color,
-          'circle-opacity': 0.8
-        }}>
-        <Feature coordinates={this.state.currentPosition} />
-      </Layer>
+      <MapboxPopup
+        anchor={'bottom'}
+        coordinates={this.state.currentPosition}
+        className={`mapboxgl-popup mapboxgl-popup-anchor-bottom ${slug(this.props.name, { lower: true })}`}
+      >
+        <img src='/assets/bus-tracker-icon.png' />
+        <img src='/assets/bus-icon-small.png' />
+      </MapboxPopup>
     );
   }
 }

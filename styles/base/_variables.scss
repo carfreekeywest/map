@@ -38,3 +38,12 @@ $breakpoints: (
   'small': (max-width: $breakpoint-small),
   'retina': (max-width: $breakpoint-small)
 );
+
+$bus-colors: (
+  'blue': rgb(20, 138, 255),
+  'duval-loop': rgb(124, 115, 255),
+  'green': rgb(28, 196, 22),
+  'lower-keys-shuttle': rgb(237, 40, 211),
+  'orange': rgb(255, 164, 8),
+  'red': rgb(255, 28, 20)
+);
