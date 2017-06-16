@@ -141,13 +141,6 @@ class BikeMap extends Component {
     });
   }
 
-  centerOnFeature(feature) {
-    this.setState({
-      center: feature.geometry.coordinates,
-      zoom: [15]
-    });
-  }
-
   toggleBusRoutes(value) {
     const busRoutesEnabled = (value === undefined) ? !this.state.busRoutesEnabled : value;
     const visibility = busRoutesEnabled ? 'visible' : 'none';
@@ -319,7 +312,7 @@ class BikeMap extends Component {
         </footer>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
-          <Popup map={this.state.map} layer='poi-cfkw' centerOnFeature={this.centerOnFeature.bind(this)} close={this.deselectFeature.bind(this)} {...props} />
+          <Popup map={this.state.map} layer='poi-cfkw' close={this.deselectFeature.bind(this)} {...props} />
         )}/>
       </div>
     );

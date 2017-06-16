@@ -19,7 +19,6 @@ function Popup({ close, feature }) {
 
 export default class PopupContainer extends Component {
   static propTypes = {
-    centerOnFeature: PropTypes.func.isRequired,
     close: PropTypes.func.isRequired,
     layer: PropTypes.string.isRequired,
     map: PropTypes.object,
@@ -46,7 +45,6 @@ export default class PopupContainer extends Component {
     this.setState(() => {
       return { feature };
     });
-    this.props.centerOnFeature(feature);
   }
 
   findFeatureIfNeeded(props) {
