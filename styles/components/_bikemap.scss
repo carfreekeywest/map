@@ -21,4 +21,13 @@
     width: 150px;
     z-index: 15;
   }
+
+  .mapboxgl-popup {
+    font-family: $font-stack-main;
+
+    &-content {
+      border-radius: 0;
+      padding: 10px;
+    }
+  }
 }
