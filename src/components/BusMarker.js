@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Feature, Layer } from 'react-mapbox-gl';
 import { getBusLocation } from '../services/bus';
 

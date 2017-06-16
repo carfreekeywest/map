@@ -30,6 +30,7 @@
     "@turf/inside": "^4.1.0",
     "@turf/midpoint": "^4.4.0",
     "mapbox-gl": "^0.36.0",
+    "prop-types": "^15.5.10",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
     "react-mapbox-gl": "^1.12.0",
