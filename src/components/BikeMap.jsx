@@ -195,7 +195,7 @@ class BikeMap extends Component {
 
           { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadius) ? (
             <GeoJSONLayer
-              before='current-location'
+              before='current-location-shadow'
               data={this.state.currentPositionRadius}
               circleLayout={{ visibility: 'none' }}
               fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#3FAADC' }}
@@ -205,7 +205,7 @@ class BikeMap extends Component {
 
           { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadiusLine) ? (
             <GeoJSONLayer
-              before='current-location'
+              before='current-location-shadow'
               circleLayout={{ visibility: 'none' }}
               data={this.state.currentPositionRadiusLine}
               linePaint={{ 'line-color': '#FFFFFF', 'line-width': 5 }}
@@ -214,7 +214,7 @@ class BikeMap extends Component {
 
           { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadiusLineMidpoint) ? (
             <GeoJSONLayer
-              before='current-location'
+              before='current-location-shadow'
               data={this.state.currentPositionRadiusLineMidpoint}
               symbolLayout={{
                 'icon-image': '1mile-bike-walk',
@@ -222,6 +222,21 @@ class BikeMap extends Component {
                 'icon-size': 0.3
               }}
             />
+          ) : '' }
+
+          { this.state.currentPosition ? (
+            <Layer
+              id='current-location-shadow'
+              before='current-location'
+              type='circle'
+              paint={{
+                'circle-radius': 10,
+                'circle-color': 'black',
+                'circle-opacity': 0.2,
+                'circle-stroke-width': 0
+              }}>
+              <Feature coordinates={this.state.currentPosition} />
+            </Layer>
           ) : '' }
 
           { this.state.currentPosition ? (
