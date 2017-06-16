@@ -49,6 +49,7 @@ class BikeMap extends Component {
       routePopup: null,
       routePopupCoordinates: null,
       selectedBuses: [],
+      selectedFeature: null,
       zoom: [13]
     };
   }
@@ -133,6 +134,10 @@ class BikeMap extends Component {
     });
   }
 
+  setSelectedFeature(selectedFeature) {
+    this.setState({ selectedFeature });
+  }
+
   deselectFeature() {
     this.props.history.push('/');
     this.setState({
@@ -185,6 +190,19 @@ class BikeMap extends Component {
           onStyleLoad={this.onStyleLoad.bind(this)}
         >
           <ZoomControl />
+
+          { (this.state.selectedFeature) ? (
+            <GeoJSONLayer
+              before='poi-cfkw'
+              data={this.state.selectedFeature.geometry}
+              type='circle'
+              circlePaint={{
+                'circle-color': '#ED247C',
+                'circle-radius': 20,
+                'circle-opacity': 0.3
+              }}
+            />
+          ) : '' }
 
           { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadius) ? (
             <GeoJSONLayer
@@ -312,7 +330,13 @@ class BikeMap extends Component {
         </footer>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
-          <Popup map={this.state.map} layer='poi-cfkw' close={this.deselectFeature.bind(this)} {...props} />
+          <Popup
+            map={this.state.map}
+            layer='poi-cfkw'
+            close={this.deselectFeature.bind(this)}
+            setSelectedFeature={this.setSelectedFeature.bind(this)}
+            {...props}
+          />
         )}/>
       </div>
     );

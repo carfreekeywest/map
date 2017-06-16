@@ -22,7 +22,8 @@ export default class PopupContainer extends Component {
     close: PropTypes.func.isRequired,
     layer: PropTypes.string.isRequired,
     map: PropTypes.object,
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    setSelectedFeature: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -40,11 +41,16 @@ export default class PopupContainer extends Component {
     this.findFeatureIfNeeded(nextProps);
   }
 
+  componentWillUnmount() {
+    this.props.setSelectedFeature(null);
+  }
+
   setFeature(layer, name, id) {
     const feature = this.findFeature(layer, name, id);
     this.setState(() => {
       return { feature };
     });
+    this.props.setSelectedFeature(feature);
   }
 
   findFeatureIfNeeded(props) {
