@@ -43,8 +43,8 @@ class BikeMap extends Component {
       legendShown: false,
       map: null,
       mouseOverClickable: false,
-      routePopup: null,
-      routePopupCoordinates: null,
+      popupLabel: null,
+      popupCoordinates: null,
       selectedBuses: [],
       selectedFeature: null,
       zoom: [13]
@@ -71,7 +71,7 @@ class BikeMap extends Component {
 
   onClick(map, event) {
     const features = map.queryRenderedFeatures(event.point, {
-      layers: ['poi-cfkw'].concat(Object.keys(routeLayerLabels))
+      layers: ['circulator-stops-fill', 'poi-cfkw'].concat(Object.keys(routeLayerLabels))
     });
     if (!features.length) {
       this.deselectFeature();
@@ -82,14 +82,19 @@ class BikeMap extends Component {
 
     if (feature.layer.id === 'poi-cfkw') {
       this.setState({
-        routePopup: null,
-        routePopupCoordinates: null
+        popupCoordinates: null,
+        popupLabel: null
       });
       this.props.history.push(`/poi/${feature.properties.NAME}/${feature.id}`);
+    } else if (feature.layer.id === 'circulator-stops-fill') {
+      this.setState({
+        popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        popupLabel: feature.properties.stop
+      });
     } else if (routeLayerLabels[feature.layer.id]) {
       this.setState({
-        routePopupCoordinates: [event.lngLat.lng, event.lngLat.lat],
-        routePopup: routeLayerLabels[feature.layer.id]
+        popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        popupLabel: routeLayerLabels[feature.layer.id]
       });
     }
   }
@@ -124,8 +129,8 @@ class BikeMap extends Component {
   deselectFeature() {
     this.props.history.push('/');
     this.setState({
-      routePopup: null,
-      routePopupCoordinates: null
+      popupLabel: null,
+      popupCoordinates: null
     });
   }
 
@@ -210,9 +215,9 @@ class BikeMap extends Component {
             </Layer>
           ) : '' }
 
-          { this.state.routePopup ? (
-            <MapboxPopup anchor={'bottom'} coordinates={this.state.routePopupCoordinates}>
-              {this.state.routePopup}
+          { this.state.popupLabel ? (
+            <MapboxPopup anchor={'bottom'} coordinates={this.state.popupCoordinates}>
+              {this.state.popupLabel}
             </MapboxPopup>
           ) : '' }
 
