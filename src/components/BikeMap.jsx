@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
 import ReactMapboxGl, { Feature, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
+import throttle from 'lodash.throttle';
 import turfBboxPolygon from '@turf/bbox-polygon';
 import turfInside from '@turf/inside';
 import { point as turfPoint } from '@turf/helpers';
@@ -24,6 +25,7 @@ const routeLayerLabels = {
 
 const bounds = [24.49, -81.94, 24.64, -81.61];
 const boundsBbox = turfBboxPolygon(bounds);
+const footerHeight = 60;
 
 class BikeMap extends Component {
   static propTypes = {
@@ -42,6 +44,7 @@ class BikeMap extends Component {
       currentPositionRadiusEnabled: false,
       legendShown: false,
       map: null,
+      mapHeight: 0,
       mouseOverClickable: false,
       popupLabel: null,
       popupCoordinates: null,
@@ -56,6 +59,12 @@ class BikeMap extends Component {
       this.getBusRoutes();
     }
 
+    // Add map height resize
+    this.updateMapHeight();
+    const bound = this.updateMapHeight.bind(this);
+    this.resizeListener = throttle(bound, 100);
+    window.addEventListener('resize', this.resizeListener);
+
     this.watchPositionId = navigator.geolocation.watchPosition(position => {
       let currentPosition = [position.coords.longitude, position.coords.latitude];
       if (!turfInside(turfPoint(currentPosition), boundsBbox)) {
@@ -66,6 +75,7 @@ class BikeMap extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeListener);
     navigator.geolocation.clearWatch(this.watchPositionId);
   }
 
@@ -126,6 +136,11 @@ class BikeMap extends Component {
     this.setState({ selectedFeature });
   }
 
+  updateMapHeight() {
+    this.setState({ mapHeight: window.innerHeight - footerHeight });
+    window.scroll(0, 0);
+  }
+
   deselectFeature() {
     this.props.history.push('/');
     this.setState({
@@ -170,7 +185,7 @@ class BikeMap extends Component {
           minZoom={11}
           maxBounds={[[bounds[1], bounds[1]], [bounds[3], bounds[2]]]}
           containerStyle={{
-            height: 'calc(100vh - 60px)',
+            height: this.state.mapHeight,
             width: '100%'
           }}
           onClick={this.onClick.bind(this)}

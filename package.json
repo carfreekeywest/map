@@ -29,6 +29,7 @@
     "@turf/helpers": "^4.1.0",
     "@turf/inside": "^4.1.0",
     "@turf/midpoint": "^4.4.0",
+    "lodash.throttle": "^4.1.1",
     "mapbox-gl": "^0.36.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.3",
