@@ -12,6 +12,7 @@ import turfMidpoint from '@turf/midpoint';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import BusMarker from './BusMarker';
 import BusMenu from './BusMenu';
+import FeatureHighlight from './FeatureHighlight';
 import Popup from './Popup';
 import { getBuses } from '../services/bus';
 import { busRouteLayerNames } from '../config';
@@ -192,18 +193,7 @@ class BikeMap extends Component {
         >
           <ZoomControl />
 
-          { (this.state.selectedFeature) ? (
-            <GeoJSONLayer
-              before='poi-cfkw'
-              data={this.state.selectedFeature.geometry}
-              type='circle'
-              circlePaint={{
-                'circle-color': '#ED247C',
-                'circle-radius': 20,
-                'circle-opacity': 0.3
-              }}
-            />
-          ) : '' }
+          <FeatureHighlight feature={this.state.selectedFeature} />
 
           { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadius) ? (
             <GeoJSONLayer
