@@ -3,15 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import ReactMapboxGl, { Feature, GeoJSONLayer, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Feature, Layer, Popup as MapboxPopup, ZoomControl } from 'react-mapbox-gl';
 import turfBboxPolygon from '@turf/bbox-polygon';
-import turfCircle from '@turf/circle';
-import turfDestination from '@turf/destination';
 import turfInside from '@turf/inside';
-import turfMidpoint from '@turf/midpoint';
-import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
+import { point as turfPoint } from '@turf/helpers';
 import BusMarker from './BusMarker';
 import BusMenu from './BusMenu';
+import CurrentPositionRadius from './CurrentPositionRadius';
 import FeatureHighlight from './FeatureHighlight';
 import Popup from './Popup';
 import { getBuses } from '../services/bus';
@@ -41,10 +39,7 @@ class BikeMap extends Component {
       busRoutesEnabled: true,
       center: [-81.778836, 24.558053],
       currentPosition: null,
-      currentPositionRadius: null,
       currentPositionRadiusEnabled: false,
-      currentPositionRadiusLine: null,
-      currentPositionRadiusLineMidpoint: null,
       legendShown: false,
       map: null,
       mouseOverClickable: false,
@@ -62,25 +57,11 @@ class BikeMap extends Component {
     }
 
     this.watchPositionId = navigator.geolocation.watchPosition(position => {
-      let coords = [position.coords.longitude, position.coords.latitude];
-      let point = turfPoint(coords);
-
-      // If point outside of keywest, fall back to default
-      if (!turfInside(point, boundsBbox)) {
-        coords = [-81.802118, 24.554755];
-        point = turfPoint(coords);
+      let currentPosition = [position.coords.longitude, position.coords.latitude];
+      if (!turfInside(turfPoint(currentPosition), boundsBbox)) {
+        currentPosition = [-81.802118, 24.554755];
       }
-      const buffer = turfCircle(point, 1, 64, 'miles');
-      const endPoint = turfDestination(point, 1, 90, 'miles');
-      const bufferLine = turfLineString([coords, endPoint.geometry.coordinates]);
-      const bufferLineMidpoint = turfMidpoint(point, endPoint);
-
-      this.setState({
-        currentPosition: coords,
-        currentPositionRadius: buffer,
-        currentPositionRadiusLine: bufferLine,
-        currentPositionRadiusLineMidpoint: bufferLineMidpoint
-      });
+      this.setState({ currentPosition });
     });
   }
 
@@ -195,35 +176,8 @@ class BikeMap extends Component {
 
           <FeatureHighlight feature={this.state.selectedFeature} />
 
-          { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadius) ? (
-            <GeoJSONLayer
-              before='current-location-shadow'
-              data={this.state.currentPositionRadius}
-              circleLayout={{ visibility: 'none' }}
-              fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#3FAADC' }}
-              lineLayout={{ visibility: 'none' }}
-            />
-          ) : '' }
-
-          { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadiusLine) ? (
-            <GeoJSONLayer
-              before='current-location-shadow'
-              circleLayout={{ visibility: 'none' }}
-              data={this.state.currentPositionRadiusLine}
-              linePaint={{ 'line-color': '#FFFFFF', 'line-width': 5 }}
-            />
-          ) : '' }
-
-          { (this.state.currentPositionRadiusEnabled && this.state.currentPositionRadiusLineMidpoint) ? (
-            <GeoJSONLayer
-              before='current-location-shadow'
-              data={this.state.currentPositionRadiusLineMidpoint}
-              symbolLayout={{
-                'icon-image': '1mile-bike-walk',
-                'icon-offset': [0, -40],
-                'icon-size': 0.3
-              }}
-            />
+          { this.state.currentPositionRadiusEnabled ? (
+            <CurrentPositionRadius position={this.state.currentPosition} />
           ) : '' }
 
           { this.state.currentPosition ? (
