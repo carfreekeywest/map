@@ -32,6 +32,7 @@ config.devServer = {
   noInfo: true, //  --no-info option
   historyApiFallback: true,
   hot: true,
+  host: '0.0.0.0',
   inline: true,
   port: 8888,
   watchOptions: {
