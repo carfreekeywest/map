@@ -7,10 +7,11 @@
 
   .mapboxgl-popup-tip {
     border-top-color: $color;
+    margin-top: -2px;
   }
 }
 
-.mapboxgl-popup {
+.busmarker-popup {
   img {
     margin: 3px;
   }

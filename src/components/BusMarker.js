@@ -49,7 +49,7 @@ export default class BusMarker extends Component {
       <MapboxPopup
         anchor={'bottom'}
         coordinates={this.state.currentPosition}
-        className={`mapboxgl-popup mapboxgl-popup-anchor-bottom ${slug(this.props.name, { lower: true })}`}
+        className={`mapboxgl-popup mapboxgl-popup-anchor-bottom busmarker-popup ${slug(this.props.name, { lower: true })}`}
       >
         <img src='/assets/bus-tracker-icon.png' />
         <img src='/assets/bus-icon-small.png' />
