@@ -5,6 +5,10 @@
   width: 175px;
   z-index: 10;
 
+  @include respond-to('small') {
+    width: 125px;
+  }
+
   img {
     max-width: 100%;
   }
