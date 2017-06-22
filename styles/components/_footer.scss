@@ -1,3 +1,6 @@
+$footer-buttons-width: 225px;
+$footer-buttons-width-small: 195px;
+
 footer {
   background: $dark-blue;
   color: white;
@@ -5,6 +8,12 @@ footer {
 
   .bottom-buttons {
     height: 100%;
+    float: left;
+    width: $footer-buttons-width;
+
+    @include respond-to('small') {
+      width: $footer-buttons-width-small;
+    }
 
     img {
       max-height: 100%;
@@ -17,6 +26,10 @@ footer {
     height: $footer-height * 0.8;
     margin-top: $footer-height * 0.1;
     margin-left: 25px;
+
+    @include respond-to('small') {
+      margin-left: 10px;
+    }
   }
 
   .bus-button {
@@ -25,5 +38,24 @@ footer {
     height: $footer-height * 0.8;
     margin-top: $footer-height * 0.1;
     margin-left: 25px;
+
+    @include respond-to('small') {
+      margin-left: 10px;
+    }
+  }
+
+  .footer-text {
+    float: left;
+    line-height: 16px;
+    padding: 10px;
+    text-align: center;
+    width: calc(100% - #{$footer-buttons-width});
+
+    @include respond-to('small') {
+      font-size: 12px;
+      line-height: 12px;
+      padding: 5px;
+      width: calc(100% - #{$footer-buttons-width-small});
+    }
   }
 }

@@ -303,6 +303,9 @@ class BikeMap extends Component {
               <img src={`/assets/bus-icon${this.state.busMenuOpen ? '-enabled' : ''}.png`} />
             </a>
           </div>
+          <div className='footer-text'>
+            { this.state.currentPositionRadiusEnabled ?  'This circle shows a 1 mile radius from your current location, just an 8 minute bike or a 20 minute walk' : '' }
+          </div>
         </footer>
 
         <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
