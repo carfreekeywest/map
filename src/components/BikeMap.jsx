@@ -81,7 +81,7 @@ class BikeMap extends Component {
 
   onClick(map, event) {
     const features = map.queryRenderedFeatures(event.point, {
-      layers: ['circulator-stops-fill', 'poi-cfkw'].concat(Object.keys(routeLayerLabels))
+      layers: ['circulator-stops-fill', 'harbor-walk', 'poi-cfkw'].concat(Object.keys(routeLayerLabels))
     });
     if (!features.length) {
       this.deselectFeature();
@@ -105,6 +105,11 @@ class BikeMap extends Component {
       this.setState({
         popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
         popupLabel: routeLayerLabels[feature.layer.id]
+      });
+    } else if (feature.layer.id === 'harbor-walk') {
+      this.setState({
+        popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        popupLabel: 'Harbor Walk'
       });
     }
   }
