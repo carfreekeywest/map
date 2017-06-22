@@ -18,7 +18,7 @@ $legend-border-radius: 5px;
   .legend-body {
     max-height: 80vh;
     overflow-y: auto;
-    padding: 10px;
+    padding: 10px 15px;
   }
 
   .legend-lane-types {
@@ -31,11 +31,13 @@ $legend-border-radius: 5px;
     margin: 20px 0;
 
     &-name {
+      font-size: 16px;
       font-weight: bold;
       margin-bottom: 5px;
     }
 
     &-description {
+      font-weight: 300;
       line-height: 16px;
       margin-bottom: 5px;
     }
