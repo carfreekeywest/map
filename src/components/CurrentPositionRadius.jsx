@@ -47,7 +47,7 @@ export default class CurrentPositionRadius extends Component {
             before='current-location-shadow'
             data={this.state.buffer}
             circleLayout={{ visibility: 'none' }}
-            fillPaint={{ 'fill-opacity': 0.2, 'fill-color': '#3FAADC' }}
+            fillPaint={{ 'fill-opacity': 0.6, 'fill-color': '#3FAADC' }}
             lineLayout={{ visibility: 'none' }}
           />
         ) : '' }
