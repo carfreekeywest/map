@@ -81,7 +81,7 @@ class BikeMap extends Component {
 
   onClick(map, event) {
     const features = map.queryRenderedFeatures(event.point, {
-      layers: ['circulator-stops-fill', 'harbor-walk', 'poi-cfkw'].concat(Object.keys(routeLayerLabels))
+      layers: ['circulator-stops-fill', 'harbor-walk', 'poi-cfkw'].concat(Object.keys(routeLayerLabels).concat(busRouteLayerNames))
     });
     if (!features.length) {
       this.deselectFeature();
@@ -110,6 +110,11 @@ class BikeMap extends Component {
       this.setState({
         popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
         popupLabel: 'Harbor Walk'
+      });
+    } else if (busRouteLayerNames.includes(feature.layer.id)) {
+      this.setState({
+        popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        popupLabel: 'Key West Transit Bus Route'
       });
     }
   }
