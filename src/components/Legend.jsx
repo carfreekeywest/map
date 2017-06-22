@@ -49,6 +49,10 @@ export default function({ hide, busRoutesEnabled, toggleBusRoutes }) {
               </label>
             </div>
           </li>
+          <li className='lane-type'>
+            <div className='lane-type-name'>Harbor Walk</div>
+            <div className='lane-type-symbol harbor-walk'></div>
+          </li>
         </ul>
       </div>
     </div>

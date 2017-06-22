@@ -72,6 +72,10 @@ $legend-border-radius: 5px;
         background: $bus-route-color;
         height: 4px;
       }
+
+      &.harbor-walk {
+        background: $harbor-walk-color;
+      }
     }
   }
 
