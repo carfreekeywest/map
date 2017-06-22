@@ -38,7 +38,7 @@ class BikeMap extends Component {
     this.state = {
       buses: [],
       busMenuOpen: false,
-      busRoutesEnabled: true,
+      busRoutesEnabled: false,
       center: [-81.778836, 24.558053],
       currentPosition: null,
       currentPositionRadiusEnabled: false,
@@ -124,6 +124,7 @@ class BikeMap extends Component {
       map.addImage('1mile-bike-walk', image);
     });
     this.setState({ map });
+    this.toggleBusRoutes(this.state.busRoutesEnabled);
   }
 
   getBusRoutes() {
