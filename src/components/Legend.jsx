@@ -27,7 +27,7 @@ export default function({ hide, busRoutesEnabled, toggleBusRoutes }) {
           <li className='lane-type'>
             <div className='lane-type-name'>Duval Loop</div>
             <div className='lane-type-description'>
-              <div>Free shuttle, runs every 15 minutes!</div>
+              <div>Free shuttle, runs every 15 minutes 6am to midnight!</div>
               <div>In season: 7 days per week</div>
               <div>Off season: Thursday - Sunday</div>
             </div>
