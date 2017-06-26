@@ -306,17 +306,17 @@ class BikeMap extends Component {
           <div className='footer-text'>
             { this.state.currentPositionRadiusEnabled ?  'This circle shows a 1 mile radius from your current location, just an 8 minute bike or a 20 minute walk' : '' }
           </div>
-        </footer>
 
-        <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
-          <Popup
-            map={this.state.map}
-            layer='poi-cfkw'
-            close={this.deselectFeature.bind(this)}
-            setSelectedFeature={this.setSelectedFeature.bind(this)}
-            {...props}
-          />
-        )}/>
+          <Route path={`${this.props.match.url}poi/:name/:id`} render={props => (
+            <Popup
+              map={this.state.map}
+              layer='poi-cfkw'
+              close={this.deselectFeature.bind(this)}
+              setSelectedFeature={this.setSelectedFeature.bind(this)}
+              {...props}
+            />
+          )}/>
+        </footer>
       </div>
     );
   }
