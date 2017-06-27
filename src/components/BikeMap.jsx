@@ -194,7 +194,7 @@ class BikeMap extends Component {
           center={this.state.center}
           zoom={this.state.zoom}
           minZoom={11}
-          maxBounds={[[bounds[1], bounds[1]], [bounds[3], bounds[2]]]}
+          maxBounds={[[bounds[1], bounds[0]], [bounds[3], bounds[2]]]}
           containerStyle={{
             height: this.state.mapHeight,
             width: '100%'
