@@ -68,6 +68,7 @@ class BikeMap extends Component {
     this.watchPositionId = navigator.geolocation.watchPosition(position => {
       let currentPosition = [position.coords.longitude, position.coords.latitude];
       if (!turfInside(turfPoint(currentPosition), boundsBbox)) {
+        console.log('Outside bounds: using default position');
         currentPosition = [-81.802118, 24.554755];
       }
       this.setState({ currentPosition });
