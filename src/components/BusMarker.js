@@ -51,8 +51,7 @@ export default class BusMarker extends Component {
         coordinates={this.state.currentPosition}
         className={`mapboxgl-popup mapboxgl-popup-anchor-bottom busmarker-popup ${slug(this.props.name, { lower: true })}`}
       >
-        <img src='/assets/bus-tracker-icon.png' />
-        <img src='/assets/bus-icon-small.png' />
+        <img src='/assets/real-time-icon.png' />
       </MapboxPopup>
     );
   }
