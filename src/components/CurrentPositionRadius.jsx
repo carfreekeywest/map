@@ -4,7 +4,6 @@ import { GeoJSONLayer } from 'react-mapbox-gl';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfCircle from '@turf/circle';
 import turfDestination from '@turf/destination';
-import turfMidpoint from '@turf/midpoint';
 
 export default class CurrentPositionRadius extends Component {
   static propTypes = {
@@ -15,8 +14,7 @@ export default class CurrentPositionRadius extends Component {
     super(props);
     this.state = {
       buffer: null,
-      line: null,
-      midpoint: null
+      line: null
     };
   }
 
@@ -34,9 +32,8 @@ export default class CurrentPositionRadius extends Component {
     const buffer = point ? turfCircle(point, 1, 64, 'miles') : null;
     const endPoint = point ? turfDestination(point, 1, 90, 'miles') : null;
     const line = coords && endPoint ? turfLineString([coords, endPoint.geometry.coordinates]) : null;
-    const midpoint = point && endPoint ? turfMidpoint(point, endPoint) : null;
 
-    this.setState({ buffer, line, midpoint });
+    this.setState({ buffer, line });
   }
 
   render() {
@@ -58,18 +55,6 @@ export default class CurrentPositionRadius extends Component {
             circleLayout={{ visibility: 'none' }}
             data={this.state.line}
             linePaint={{ 'line-color': '#FFFFFF', 'line-width': 5 }}
-          />
-        ) : '' }
-
-        { this.state.midpoint ? (
-          <GeoJSONLayer
-            before='current-location-shadow'
-            data={this.state.midpoint}
-            symbolLayout={{
-              'icon-image': '1mile-bike-walk',
-              'icon-offset': [0, -40],
-              'icon-size': 0.3
-            }}
           />
         ) : '' }
       </div>
