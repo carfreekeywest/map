@@ -217,9 +217,9 @@ class BikeMap extends Component {
               before='current-location'
               type='circle'
               paint={{
-                'circle-radius': 10,
-                'circle-color': 'black',
-                'circle-opacity': 0.2,
+                'circle-radius': 13,
+                'circle-color': '#4285F4',
+                'circle-opacity': 0.3,
                 'circle-stroke-width': 0
               }}>
               <Feature coordinates={this.state.currentPosition} />
@@ -231,10 +231,10 @@ class BikeMap extends Component {
               id='current-location'
               type='circle'
               paint={{
-                'circle-radius': 6,
-                'circle-color': '#0F7BBC',
+                'circle-radius': 7,
+                'circle-color': '#4285F4',
                 'circle-opacity': 1,
-                'circle-stroke-width': 2,
+                'circle-stroke-width': 1,
                 'circle-stroke-color': 'white'
               }}>
               <Feature coordinates={this.state.currentPosition} />
