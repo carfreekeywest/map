@@ -288,6 +288,8 @@ class BikeMap extends Component {
           <BusMenu
             hide={this.hideBusMenu.bind(this)}
             buses={this.state.buses}
+            busRoutesEnabled={this.state.busRoutesEnabled}
+            toggleBusRoutes={this.toggleBusRoutes.bind(this)}
             selectedBuses={this.state.selectedBuses}
             toggleBus={(bus) => {
               const busIndex = this.state.selectedBuses.indexOf(bus);

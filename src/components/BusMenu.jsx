@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 export default class BusMenu extends Component {
   static propTypes = {
     buses: PropTypes.array.isRequired,
+    busRoutesEnabled: PropTypes.bool.isRequired,
     selectedBuses: PropTypes.array.isRequired,
     toggleBus: PropTypes.func.isRequired,
+    toggleBusRoutes: PropTypes.func.isRequired,
     hide: PropTypes.func.isRequired
   };
 
@@ -27,7 +29,7 @@ export default class BusMenu extends Component {
   }
 
   render() {
-    const { buses, hide } = this.props;
+    const { buses, busRoutesEnabled, hide, toggleBusRoutes } = this.props;
     return (
       <div className='bus-menu'>
         <div className='bus-menu-header'>
@@ -42,6 +44,15 @@ export default class BusMenu extends Component {
             {buses.slice(buses.length / 2, buses.length).map(bus => this.renderBusItem(bus))}
           </div>
           <div className='clearfix'></div>
+          <div className='bus-route-toggle'>
+            <label>
+              <input type='checkbox'
+                onChange={() => toggleBusRoutes()}
+                checked={busRoutesEnabled}
+              />
+              Show bus routes (hides bike lanes)
+            </label>
+          </div>
         </div>
       </div>
     );
