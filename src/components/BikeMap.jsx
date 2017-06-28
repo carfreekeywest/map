@@ -103,9 +103,14 @@ class BikeMap extends Component {
         popupLabel: feature.properties.stop
       });
     } else if (routeLayerLabels[feature.layer.id]) {
+      let label = routeLayerLabels[feature.layer.id];
+      const name = feature.properties.Name;
+      if (name && name.length) {
+        label = `${name} (${routeLayerLabels[feature.layer.id]})`;
+      }
       this.setState({
         popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
-        popupLabel: routeLayerLabels[feature.layer.id]
+        popupLabel: label
       });
     } else if (feature.layer.id === 'harbor-walk') {
       this.setState({
