@@ -36,6 +36,7 @@ class BikeMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      bikeRoutesEnabled: true,
       buses: [],
       busMenuOpen: false,
       busRoutesEnabled: false,
@@ -140,6 +141,7 @@ class BikeMap extends Component {
       map.addImage('1mile-bike-walk', image);
     });
     this.setState({ map });
+    this.toggleBikeRoutes(this.state.bikeRoutesEnabled);
     this.toggleBusRoutes(this.state.busRoutesEnabled);
   }
 
@@ -166,6 +168,15 @@ class BikeMap extends Component {
     });
   }
 
+  toggleBikeRoutes(value) {
+    const bikeRoutesEnabled = (value === undefined) ? !this.state.bikeRoutesEnabled : value;
+    const visibility = bikeRoutesEnabled ? 'visible' : 'none';
+    Object.keys(bikeRouteLayerLabels).forEach(layer => {
+      this.state.map.setLayoutProperty(layer, 'visibility', visibility);
+    });
+    this.setState({ bikeRoutesEnabled });
+  }
+
   toggleBusRoutes(value) {
     const busRoutesEnabled = (value === undefined) ? !this.state.busRoutesEnabled : value;
     const visibility = busRoutesEnabled ? 'visible' : 'none';
@@ -173,6 +184,7 @@ class BikeMap extends Component {
       this.state.map.setLayoutProperty(layer, 'visibility', visibility);
     });
     this.setState({ busRoutesEnabled });
+    this.toggleBikeRoutes(!busRoutesEnabled);
   }
 
   hideLegend() {

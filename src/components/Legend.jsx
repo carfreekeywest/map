@@ -45,7 +45,7 @@ export default function({ hide, busRoutesEnabled, toggleBusRoutes }) {
                   onChange={() => toggleBusRoutes()}
                   checked={busRoutesEnabled}
                 />
-                Show bus routes
+                Show bus routes (hides bike lanes)
               </label>
             </div>
           </li>
