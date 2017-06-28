@@ -16,7 +16,7 @@ import Popup from './Popup';
 import { getBuses } from '../services/bus';
 import { busRouteLayerNames } from '../config';
 
-const routeLayerLabels = {
+const bikeRouteLayerLabels = {
   'bike-lanes': 'Bike Lane',
   'bike-routes': 'Bike Route',
   'bike-trails-background': 'Bike Trail',
@@ -82,7 +82,7 @@ class BikeMap extends Component {
 
   onClick(map, event) {
     const features = map.queryRenderedFeatures(event.point, {
-      layers: ['circulator-stops-fill', 'harbor-walk', 'poi-cfkw'].concat(Object.keys(routeLayerLabels).concat(busRouteLayerNames))
+      layers: ['circulator-stops-fill', 'harbor-walk', 'poi-cfkw'].concat(Object.keys(bikeRouteLayerLabels).concat(busRouteLayerNames))
     });
     if (!features.length) {
       this.deselectFeature();
@@ -102,11 +102,11 @@ class BikeMap extends Component {
         popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
         popupLabel: feature.properties.stop
       });
-    } else if (routeLayerLabels[feature.layer.id]) {
-      let label = routeLayerLabels[feature.layer.id];
+    } else if (bikeRouteLayerLabels[feature.layer.id]) {
+      let label = bikeRouteLayerLabels[feature.layer.id];
       const name = feature.properties.Name;
       if (name && name.length) {
-        label = `${name} (${routeLayerLabels[feature.layer.id]})`;
+        label = `${name} (${bikeRouteLayerLabels[feature.layer.id]})`;
       }
       this.setState({
         popupCoordinates: [event.lngLat.lng, event.lngLat.lat],
