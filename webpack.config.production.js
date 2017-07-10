@@ -4,6 +4,7 @@ var config = require('./webpack.config.js');
 
 
 config.plugins = [
+  new webpack.IgnorePlugin(/unicode\/category\/So/),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify('production')
@@ -11,6 +12,9 @@ config.plugins = [
   }),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
+      unused: true,
+      dead_code: true,
+      drop_debugger: true,
       warnings: false
     }
   }),
